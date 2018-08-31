@@ -19,6 +19,7 @@
     return NULL;
 }
 
+// 从CMSampleBufferRef中提取PCM数据
 -(NSData *) convertAudioSmapleBufferToPcmData:(CMSampleBufferRef) audioSample{
     //获取pcm数据大小
     NSInteger audioDataSize = CMSampleBufferGetTotalSampleSize(audioSample);

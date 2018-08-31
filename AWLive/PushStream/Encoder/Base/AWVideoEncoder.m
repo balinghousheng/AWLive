@@ -76,6 +76,7 @@
     return NULL;
 }
 
+// 从CMSampleBufferRef中提取yuv数据
 -(NSData *) convertVideoSmapleBufferToYuvData:(CMSampleBufferRef) videoSample{
     // 获取yuv数据
     // 通过CMSampleBufferGetImageBuffer方法，获得CVImageBufferRef。

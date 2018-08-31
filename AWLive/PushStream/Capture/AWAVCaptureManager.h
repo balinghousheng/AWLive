@@ -14,8 +14,8 @@
 
 typedef enum : NSUInteger {
     AWAVCaptureTypeNone,
-    AWAVCaptureTypeSystem,
-    AWAVCaptureTypeGPUImage,
+    AWAVCaptureTypeSystem, // 系统捕获视频
+    AWAVCaptureTypeGPUImage, // GPUImage捕获视频
 } AWAVCaptureType;
 
 @interface AWAVCaptureManager : NSObject

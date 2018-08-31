@@ -26,6 +26,7 @@
     return _vSemaphore;
 }
 
+// 第二步，向编码器丢数据
 -(aw_flv_video_tag *)encodeYUVDataToFlvTag:(NSData *)yuvData{
     if (!_vEnSession) {
         return NULL;
@@ -71,6 +72,7 @@
     //硬编码主要其实就这一句。将携带NV12数据的PixelBuf送到硬编码器中，进行编码。
     status = VTCompressionSessionEncodeFrame(_vEnSession, pixelBuf, pts, kCMTimeInvalid, NULL, pixelBuf, NULL);
     
+    // 第四步，其实，此时硬编码已结束，这一步跟编码无关，将取得的h264数据，送到推流器中。
     if (status == noErr) {
         dispatch_semaphore_wait(self.vSemaphore, DISPATCH_TIME_FOREVER);
         if (_naluData) {
@@ -117,6 +119,7 @@
     return sps_pps_tag;
 }
 
+//第三步，通过硬编码回调获取h264数据
 static void vtCompressionSessionCallback (void * CM_NULLABLE outputCallbackRefCon,
                                           void * CM_NULLABLE sourceFrameRefCon,
                                           OSStatus status,
@@ -192,6 +195,7 @@ static void vtCompressionSessionCallback (void * CM_NULLABLE outputCallbackRefCo
     }
 }
 
+// 第一步，开启硬编码器
 -(void)open{
     //创建 video encode session
     // 创建 video encode session
@@ -224,6 +228,7 @@ static void vtCompressionSessionCallback (void * CM_NULLABLE outputCallbackRefCo
     }
 }
 
+// 第五步，关闭编码器
 -(void)close{
     dispatch_semaphore_signal(self.vSemaphore);
     
